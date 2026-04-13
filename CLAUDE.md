@@ -70,4 +70,23 @@ For fast non-cryptographic hashing, use xxh3. For cryptographic hashing, use bcr
 
 Don't use GraphQL unless explicitly stated. If proposing GraphQL in a plan, be prepared to argue in detail why it's necessary and worth the added complexity compared to e.g. a REST API.
 
+## Supply chain security
+
+### Minimum release age
+
+To defend against supply chain attacks, configure a minimum release age of 7 days for package managers that support it. This prevents installing freshly-published (and potentially malicious) package versions.
+
+- **npm** (v11.10.0+): Set `min-release-age=7` in `.npmrc`
+- **pnpm** (v10.16+): Set `minimumReleaseAge: 10080` in `pnpm-workspace.yaml` (value in minutes)
+- **bun** (v1.3+): Set `minimumReleaseAge = 604800` under `[install]` in `bunfig.toml` (value in seconds)
+- **uv**: Set `exclude-newer = "7 days"` under `[tool.uv]` in `pyproject.toml`
+
+If the project uses an older version of one of these tools, upgrade to a version that supports this feature.
+
+### Pin GitHub Actions by SHA
+
+When adding an external GitHub Actions step (e.g. `actions/checkout`, `actions/setup-node`, `docker/login-action`, `pnpm/action-setup`, etc.), always use the latest major version but pin it by commit SHA rather than a mutable version tag. Format: `uses: actions/checkout@<full-sha> # v6`. This prevents a compromised or force-pushed tag from injecting malicious code into CI.
+
+If an action is already pinned by SHA, don't upgrade it unless specifically asked.
+
 @RTK.md
