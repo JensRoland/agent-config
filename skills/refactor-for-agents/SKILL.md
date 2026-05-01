@@ -1,5 +1,5 @@
 ---
-name: refactor
+name: refactor-for-agents
 description: Clean Code rederived for agentic coding — refactor toward vertical slices, machine-checkable seams, locality, and load-bearing comments. Use when refactoring a file or asked to clean up a codebase.
 ---
 

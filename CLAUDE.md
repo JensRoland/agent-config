@@ -38,7 +38,7 @@ The Reader Axiom — *code is read more often than it is written, so optimize fo
 
 Every CLAUDE.md (or AGENTS.md) should open with a concise high-level architectural roadmap so an agent landing in the repo cold knows the shape of the codebase: which entities live where, how the vertical slices are organized, what shared infrastructure exists, and which non-obvious constraints apply. Keep it tight — a paragraph or a short list per major area, not a wiki dump.
 
-If the codebase follows the vertical-slice approach above, say so explicitly, and point at the `refactor` skill so agents know which guidance to apply when restructuring code.
+If the codebase follows the vertical-slice approach above, say so explicitly, and point at the `refactor-for-agents` skill so agents know which guidance to apply when restructuring code.
 
 ## Developer tooling
 
