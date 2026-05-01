@@ -23,6 +23,23 @@ All 'destructive' actions (e.g. deleting an item, sending an email, processing a
 
 Keep the README.md file updated with clear instructions on how to set up the development environment, run the application, and run tests. Include any necessary configuration steps or environment variables. If it takes more than three or four simple steps to get the development environment up and running, you should attempt to simplify the process.
 
+## Code organization
+
+The Reader Axiom — *code is read more often than it is written, so optimize for the reader* — held when humans were the primary readers. With AI agents now doing most of the reading, the optimization target shifts. Agents ingest large spans at once, follow types and contracts more easily than narrative naming, and pay a real cost for jumping between many small files. Optimize for them.
+
+- **Vertical slices, not horizontal layers.** All logic for a single entity — type, validator, serializer, repository, service, factory, DI wiring — lives in one file. Don't split a feature across `models/`, `serializers/`, `services/`, `repositories/` just because that's the conventional layout.
+- **One file per concept, up to about ten thousand lines.** Big enough to swallow a whole entity-shaped slice; small enough that a million-token context window inhales it without breaking stride. Don't manufacture a second file because the first crossed some legacy size threshold.
+- **Machine-checkable seams, not pretty ones.** Spend the design effort on contracts, types, and tests at module boundaries — not on cosmetic naming or decorative formatting.
+- **No splitting for splitting's sake.** A 200-line function that does one thing top-to-bottom is fine. Don't extract `_helper_for_step_3` just to push the parent under some line count.
+- **One canonical implementation per utility.** Date formatters, slugifiers, retry wrappers — exactly one version per codebase. If you find yourself writing a second, find and use the first.
+- **Default to no comments.** Names and types do the explaining. Add a comment only when the *why* is non-obvious (a hidden constraint, a workaround for a specific bug, a subtle invariant). Don't explain *what* the code does.
+
+### Architectural roadmap
+
+Every CLAUDE.md (or AGENTS.md) should open with a concise high-level architectural roadmap so an agent landing in the repo cold knows the shape of the codebase: which entities live where, how the vertical slices are organized, what shared infrastructure exists, and which non-obvious constraints apply. Keep it tight — a paragraph or a short list per major area, not a wiki dump.
+
+If the codebase follows the vertical-slice approach above, say so explicitly, and point at the `refactor-for-agents` skill so agents know which guidance to apply when restructuring code.
+
 ## Developer tooling
 
 Use GitHub Actions for CI/CD.
